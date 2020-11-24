@@ -1,0 +1,151 @@
+---
+title: "Power BI model details"
+author: "Marius Sandu"
+date: "11/23/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(RDCOMClient)
+library(dplyr)
+library(magrittr)
+library(data.table)
+
+get_value <- function(x) {
+  get_v1 <- function (x) {
+    result <- x[1]
+    return(result) # kinda retarded, but works
+  }
+  result <- lapply(x, get_v1)
+  return(result)
+}
+
+rowset_to_DT <- function(x, headers) {
+  result <- x %>%
+    lapply(get_value) %>%
+    as.data.table() %>%
+    t() %>%
+    as.data.table()
+  
+  colnames(result) <- headers
+  return(result)
+}
+```
+
+
+```{r}
+con <- COMCreate("ADODB.Connection")
+con[["ConnectionString"]] <- paste(
+  "Provider=MSOLAP.8",
+  "Integrated Security=SSPI",
+  "Persist Security Info=True",
+  "Data Source=localhost:60867",
+  "Initial Catalog=4dc7b335-0729-40e4-9dd1-782c177dce7b",
+  sep = ";")
+con$Open()
+
+```
+
+## Getting raw tables
+
+```{r echo=FALSE}
+
+# TODO: Serialize the data here.
+relationships_headers <- c(
+    'ID',
+    'CrossFilteringBehavior',
+  	'FromTableID',
+  	'FromColumnID',
+  	'FromCardinality',
+  	'ToTableID',
+  	'ToColumnID',
+  	'ToCardinality',
+  	'State',
+  	'SecurityFilteringBehavior'
+    )
+
+relationships <- con$Execute("
+  select
+    [ID],
+  	[CrossFilteringBehavior],
+  	[FromTableID],
+  	[FromColumnID],
+  	[FromCardinality],
+  	[ToTableID],
+  	[ToColumnID],
+  	[ToCardinality],
+  	[State],
+  	[SecurityFilteringBehavior]
+  from
+  	$system.TMSCHEMA_RELATIONSHIPS")$GetRows() %>%
+    rowset_to_DT(headers = relationships_headers)
+
+tables_headers <- c(
+  'ID',
+  'Name',
+  'DataCategory',
+  'RefreshPolicyID',
+  'ExcludeFromModelRefresh'
+)    
+
+tables <- con$Execute("
+  select 
+  	[ID],
+  	[Name],
+  	[DataCategory],
+  	[RefreshPolicyID],
+  	[ExcludeFromModelRefresh]
+  from
+  	$system.TMSCHEMA_TABLES")$GetRows() %>%
+  rowset_to_DT(headers = tables_headers)
+
+columns_headers <- c(
+  'ID',
+  'TableID',
+  'ExplicitName',
+  'DataCategory',
+  'IsHidden',
+  'State',
+  'IsUnique',
+  'SortByColumnID',
+  'KeepUniqueRows'
+)
+
+columns <- con$Execute("
+  select 
+  	[ID],
+  	[TableID],
+  	[ExplicitName],
+  	[DataCategory],
+  	[IsHidden],
+  	[State],
+  	[IsUnique],
+  	[SortByColumnID],
+  	[KeepUniqueRows]
+  from
+  	$system.TMSCHEMA_COLUMNS")$GetRows() %>%
+  rowset_to_DT(headers = columns_headers)
+
+measures_headers <- c(
+  'ID',
+  'TableID',
+  'Name',
+  'DataType',
+  'Expression',
+  'IsHidden'
+)
+
+measures <- con$Execute("
+  select 
+  	[ID],
+  	[TableID],
+  	[Name],
+  	[DataType],
+  	[Expression],
+  	[IsHidden]
+  from
+  	$system.TMSCHEMA_MEASURES")$GetRows() %>%
+  rowset_to_DT(headers = measures_headers)
+
+```
