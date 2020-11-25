@@ -62,7 +62,8 @@
       "Type",
       "DataView",
       "RangeStart",
-      "RangeEnd"
+      "RangeEnd",
+      "Mode"
   	]
   }
 ]
