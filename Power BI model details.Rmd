@@ -12,39 +12,11 @@ library(dplyr)
 library(magrittr)
 library(data.table)
 library(jsonlite)
+source('helpers.R')
 
 dmv_queries <- fromJSON("dmv.json")
 
-get_value <- function(x) {
-  get_v1 <- function (x) {
-    result <- x[[1]] # kinda retarded, but works
-    return(result) 
-  }
-  result <- sapply(x, get_v1)
-  return(result)
-}
 
-rowset_to_DT <- function(x, headers) {
-  result <- x %>%
-    sapply(get_value) %>%
-    as.data.table() %>%
-    t() %>%
-    as.data.table() %>%
-    mutate(across(where(is.list), as.character))
-  
-  colnames(result) <- headers
-  setkey(result, 'ID')
-  return(result)
-}
-
-build_query <- function(view, headers) {
-  result <- paste(
-    'select',
-    paste0('[', headers, ']', collapse = ","),
-    paste0('from $system.', view)
-  )
-  return(result)
-}
 
 ```
 
@@ -66,14 +38,8 @@ con$Open()
 ## Getting raw tables
 
 ```{r echo=FALSE}
-# TODO: This still looks kinda wonky
 
-relationships_headers <- dmv_queries[dmv_queries$view == 'TMSCHEMA_RELATIONSHIPS',]$headers[[1]]
-
-relationships <- con$Execute(
-    build_query('TMSCHEMA_RELATIONSHIPS', relationships_headers)
-  )$GetRows() %>%
-    rowset_to_DT(headers = relationships_headers)
+relationships <- get_dmv('TMSCHEMA_RELATIONSHIPS')
 
 tables_headers <- dmv_queries[dmv_queries$view == 'TMSCHEMA_TABLES',]$headers[[1]]
 
