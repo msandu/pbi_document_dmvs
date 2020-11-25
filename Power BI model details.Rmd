@@ -13,6 +13,8 @@ library(magrittr)
 library(data.table)
 library(jsonlite)
 
+dmv_queries <- fromJSON("dmv.json")
+
 # unlist bad, NULLs can't be inside R vectors
 # so it breaks the structure, when using unlist.
 
@@ -33,6 +35,15 @@ rowset_to_DT <- function(x, headers) {
     as.data.table()
   
   colnames(result) <- headers
+  return(result)
+}
+
+build_query <- function(view, headers) {
+  result <- paste(
+    'select',
+    paste0('[',headers, ']', collapse = ","),
+    paste0('from $system.', view)
+  )
   return(result)
 }
 
@@ -57,101 +68,35 @@ con$Open()
 
 ```{r echo=FALSE}
 
-# TODO: deserialize the data here from some JSON file.
-relationships_headers <- c(
-    'ID',
-    'CrossFilteringBehavior',
-  	'FromTableID',
-  	'FromColumnID',
-  	'FromCardinality',
-  	'ToTableID',
-  	'ToColumnID',
-  	'ToCardinality',
-  	'State',
-  	'SecurityFilteringBehavior'
-    )
+# [X] TODO: deserialize the data here from some JSON file.
+# [ ] TODO: This still looks kinda wonky
 
-relationships <- con$Execute("
-  select
-    [ID],
-  	[CrossFilteringBehavior],
-  	[FromTableID],
-  	[FromColumnID],
-  	[FromCardinality],
-  	[ToTableID],
-  	[ToColumnID],
-  	[ToCardinality],
-  	[State],
-  	[SecurityFilteringBehavior]
-  from
-  	$system.TMSCHEMA_RELATIONSHIPS")$GetRows() %>%
+relationships_headers <- dmv_queries[dmv_queries$view == 'TMSCHEMA_RELATIONSHIPS',]$headers[[1]]
+
+relationships <- con$Execute(
+    build_query('TMSCHEMA_RELATIONSHIPS', relationships_headers)
+  )$GetRows() %>%
     rowset_to_DT(headers = relationships_headers)
 
-tables_headers <- c(
-  'ID',
-  'Name',
-  'DataCategory',
-  'RefreshPolicyID',
-  'ExcludeFromModelRefresh'
-)    
+tables_headers <- dmv_queries[dmv_queries$view == 'TMSCHEMA_TABLES',]$headers[[1]]
 
-tables <- con$Execute("
-  select 
-  	[ID],
-  	[Name],
-  	[DataCategory],
-  	[RefreshPolicyID],
-  	[ExcludeFromModelRefresh]
-  from
-  	$system.TMSCHEMA_TABLES")$GetRows() %>%
-  rowset_to_DT(headers = tables_headers)
+tables <- con$Execute(
+    build_query('TMSCHEMA_TABLES', tables_headers)
+  )$GetRows() %>%
+    rowset_to_DT(headers = tables_headers)
 
-columns_headers <- c(
-  'ID',
-  'TableID',
-  'ExplicitName',
-  'DataCategory',
-  'IsHidden',
-  'State',
-  'IsUnique',
-  'SortByColumnID',
-  'KeepUniqueRows'
-)
+columns_headers <- dmv_queries[dmv_queries$view == 'TMSCHEMA_COLUMNS',]$headers[[1]]
 
-columns <- con$Execute("
-  select 
-  	[ID],
-  	[TableID],
-  	[ExplicitName],
-  	[DataCategory],
-  	[IsHidden],
-  	[State],
-  	[IsUnique],
-  	[SortByColumnID],
-  	[KeepUniqueRows]
-  from
-  	$system.TMSCHEMA_COLUMNS")$GetRows() %>%
-  rowset_to_DT(headers = columns_headers)
+columns <- con$Execute(
+    build_query('TMSCHEMA_COLUMNS', columns_headers)
+  )$GetRows() %>%
+    rowset_to_DT(headers = columns_headers)
 
-measures_headers <- c(
-  'ID',
-  'TableID',
-  'Name',
-  'DataType',
-  'Expression',
-  'IsHidden'
-)
+measures_headers <- dmv_queries[dmv_queries$view == 'TMSCHEMA_MEASURES',]$headers[[1]]
 
-measures <- con$Execute("
-  select 
-  	[ID],
-  	[TableID],
-  	[Name],
-  	[DataType],
-  	[Expression],
-  	[IsHidden]
-  from
-  	$system.TMSCHEMA_MEASURES")$GetRows() %>%
-  rowset_to_DT(headers = measures_headers)
+measures <- con$Execute(
+    build_query('TMSCHEMA_MEASURES', measures_headers)
+  )$GetRows() %>%
+    rowset_to_DT(headers = measures_headers)
 
 ```
