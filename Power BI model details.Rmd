@@ -16,11 +16,9 @@ library(DT)
 source('helpers.R')
 
 dmv_queries <- fromJSON("queries/dmv.json")
-```
 
-
-```{r}
 # TODO: the port can be scanned from the localappdata folder, and the initial catalogue retrieved via a DMV query
+
 con <- COMCreate("ADODB.Connection")
 con[["ConnectionString"]] <- paste(
   "Provider=MSOLAP.8",
@@ -31,90 +29,19 @@ con[["ConnectionString"]] <- paste(
   sep = ";")
 
 con$Open()
-``` 
-
-## Getting raw tables
-
-```{r echo=FALSE}
-
-relationships <- get_dmv('TMSCHEMA_RELATIONSHIPS')
-
-tables_headers <- dmv_queries[dmv_queries$view == 'TMSCHEMA_TABLES',]$headers[[1]]
-
-tables <- con$Execute(
-    build_query('TMSCHEMA_TABLES', tables_headers)
-  )$GetRows() %>%
-    rowset_to_DT(headers = tables_headers)
-
-columns_headers <- dmv_queries[dmv_queries$view == 'TMSCHEMA_COLUMNS',]$headers[[1]]
-
-columns <- con$Execute(
-    build_query('TMSCHEMA_COLUMNS', columns_headers)
-  )$GetRows() %>%
-    rowset_to_DT(headers = columns_headers) 
-
-measures_headers <- dmv_queries[dmv_queries$view == 'TMSCHEMA_MEASURES',]$headers[[1]]
-
-measures <- con$Execute(
-    build_query('TMSCHEMA_MEASURES', measures_headers)
-  )$GetRows() %>%
-    rowset_to_DT(headers = measures_headers)
-
-
-partitions_headers <- dmv_queries[dmv_queries$view == 'TMSCHEMA_PARTITIONS',]$headers[[1]]
-
-partitions <- con$Execute(
-    build_query('TMSCHEMA_PARTITIONS', partitions_headers)
-  )$GetRows() %>%
-    rowset_to_DT(headers = partitions_headers)
 
 ```
 
-### Partitions:
+### Data sources used
 
-The Partition object represents a partition in a table. It is a child of a Table object. The partitions in
-a table define the data from external data sources that become available when the table is queried.
+The Partition object represents a partition in a table. It is a child of a Table object. The partitions in a table define the data from external data sources that become available when the table is queried.
 
 ```{r}
+
 partitions <- get_dmv('TMSCHEMA_PARTITIONS')
 partitions %>%
-  datatable(style = 'bootstrap')
+  datatable(
+    style = 'bootstrap',
+    filter = 'top')
 
 ```
-
-
-
-### Tables
-
-```{r}
-
-tables %>%
-  mutate(
-    'Is auto generated date table' = grepl('LocalDateTable_[A-Za-z0-9_\\-]{36}', Name )
-  ) %>%
-  select(
-    'Table' = Name,
-    'Data Category' = DataCategory,
-    'Hidden' = IsHidden,
-    'Excluded from refresh' = ExcludeFromModelRefresh,
-    'Is auto generated date table'
-  )
-
-```
-### Columns in model
-
-```{r}
-columns %>%
-  left_join(tables, by = c("TableID" = "ID"))  %>%
-  left_join(columns, by = c("ID" = "SortByColumnID")) %>%
-  select(
-    'Table' = 'Name',
-    'Column' = 'ExplicitName.x',
-    'Data category' = 'DataCategory.x',
-    'Is hidden' = 'IsHidden.x',
-    'Is unique' = 'IsUnique.x',
-    'Sorted by' = 'ExplicitName.y'
-  )
-
-```
-

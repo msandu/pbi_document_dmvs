@@ -1,0 +1,17 @@
+Would do structure per table:
+
+    Table:
+        Parent table
+        Partitions used
+        Columns
+        Relationships
+
+    Object sizing:
+        Dimensions in bytes for each table
+        Should be a DMV storing this
+
+
+Next steps:
+    
+    Create an interactive type of page, that autofilters based on tables used.
+    
