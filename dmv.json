@@ -20,6 +20,7 @@
       "ID",
       "Name",
       "DataCategory",
+      "IsHidden",
       "RefreshPolicyID",
       "ExcludeFromModelRefresh"
   	]
@@ -37,7 +38,8 @@
       "SortByColumnID",
       "KeepUniqueRows"
   	]
-  },{
+  },
+  {
     "view": "TMSCHEMA_MEASURES",
     "headers": [
       "ID",
