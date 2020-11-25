@@ -1,0 +1,17 @@
+[{
+    "Type": "Import",
+    "ID": "0"
+},
+{
+    "Type": "DirectQuery",
+    "ID": "1"
+},
+{
+    "Type": "Default",
+    "ID": "2"
+},
+{
+    "Type": "Push",
+    "ID": "3"
+}
+]

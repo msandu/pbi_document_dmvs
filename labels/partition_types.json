@@ -1,0 +1,25 @@
+[{
+    "Type": "Query",
+    "ID": "1"
+},
+{
+    "Type": "Calculated",
+    "ID": "2"
+},
+{
+    "Type": "None",
+    "ID": "3"
+},
+{
+    "Type": "M",
+    "ID": "4"
+},
+{
+    "Type": "Entity",
+    "ID": "5"
+},
+{
+    "Type": "Calculation group",
+    "ID": "7"
+}
+]
