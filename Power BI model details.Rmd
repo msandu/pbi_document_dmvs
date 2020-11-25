@@ -20,28 +20,30 @@ dmv_queries <- fromJSON("dmv.json")
 
 get_value <- function(x) {
   get_v1 <- function (x) {
-    result <- x[1] # kinda retarded, but works
+    result <- x[[1]] # kinda retarded, but works
     return(result) 
   }
-  result <- lapply(x, get_v1)
+  result <- sapply(x, get_v1)
   return(result)
 }
 
 rowset_to_DT <- function(x, headers) {
   result <- x %>%
-    lapply(get_value) %>%
+    sapply(get_value) %>%
     as.data.table() %>%
     t() %>%
-    as.data.table()
+    as.data.table() %>%
+    mutate(across(where(is.list), as.character))
   
   colnames(result) <- headers
+  setkey(result, 'ID')
   return(result)
 }
 
 build_query <- function(view, headers) {
   result <- paste(
     'select',
-    paste0('[',headers, ']', collapse = ","),
+    paste0('[', headers, ']', collapse = ","),
     paste0('from $system.', view)
   )
   return(result)
@@ -57,19 +59,17 @@ con[["ConnectionString"]] <- paste(
   "Provider=MSOLAP.8",
   "Integrated Security=SSPI",
   "Persist Security Info=True",
-  "Data Source=localhost:55995",
-  "Initial Catalog=2cdf3dfa-9439-48d0-b47c-b4ae194743ac",
+  "Data Source=localhost:63231",
+  "Initial Catalog=314f0f2c-814f-43c8-bc7b-7c867e7ca52c",
   sep = ";")
 
 con$Open()
-```
+``` 
 
 ## Getting raw tables
 
 ```{r echo=FALSE}
-
-# [X] TODO: deserialize the data here from some JSON file.
-# [ ] TODO: This still looks kinda wonky
+# TODO: This still looks kinda wonky
 
 relationships_headers <- dmv_queries[dmv_queries$view == 'TMSCHEMA_RELATIONSHIPS',]$headers[[1]]
 
@@ -90,7 +90,7 @@ columns_headers <- dmv_queries[dmv_queries$view == 'TMSCHEMA_COLUMNS',]$headers[
 columns <- con$Execute(
     build_query('TMSCHEMA_COLUMNS', columns_headers)
   )$GetRows() %>%
-    rowset_to_DT(headers = columns_headers)
+    rowset_to_DT(headers = columns_headers) 
 
 measures_headers <- dmv_queries[dmv_queries$view == 'TMSCHEMA_MEASURES',]$headers[[1]]
 
@@ -100,3 +100,35 @@ measures <- con$Execute(
     rowset_to_DT(headers = measures_headers)
 
 ```
+
+### Tables
+
+```{r}
+tables %>%
+  mutate(
+    'Is auto generated date table' = grepl('LocalDateTable_[A-Za-z0-9_\\-]{36}', Name )
+  ) %>%
+  select(
+    'Table' = Name,
+    'Data Category' = DataCategory,
+    'Hidden' = IsHidden,
+    'Excluded from refresh' = ExcludeFromModelRefresh,
+    'Is auto generated date table'
+  )
+```
+### Columns in model
+
+```{r}
+columns %>%
+  left_join(tables, by = c("TableID" = "ID"))  %>%
+  left_join(columns, by = c("ID" = "SortByColumnID")) %>%
+  select(
+    'Table' = 'Name',
+    'Column' = 'ExplicitName.x',
+    'Data category' = 'DataCategory.x',
+    'Is hidden' = 'IsHidden.x',
+    'Is unique' = 'IsUnique.x',
+    'Sorted by' = 'ExplicitName.y'
+  )
+```
+
