@@ -12,12 +12,10 @@ library(dplyr)
 library(magrittr)
 library(data.table)
 library(jsonlite)
+library(DT)
 source('helpers.R')
 
-dmv_queries <- fromJSON("dmv.json")
-
-
-
+dmv_queries <- fromJSON("queries/dmv.json")
 ```
 
 
@@ -72,9 +70,24 @@ partitions <- con$Execute(
 
 ```
 
+### Partitions:
+
+The Partition object represents a partition in a table. It is a child of a Table object. The partitions in
+a table define the data from external data sources that become available when the table is queried.
+
+```{r}
+partitions <- get_dmv('TMSCHEMA_PARTITIONS')
+partitions %>%
+  datatable(style = 'bootstrap')
+
+```
+
+
+
 ### Tables
 
 ```{r}
+
 tables %>%
   mutate(
     'Is auto generated date table' = grepl('LocalDateTable_[A-Za-z0-9_\\-]{36}', Name )
@@ -86,6 +99,7 @@ tables %>%
     'Excluded from refresh' = ExcludeFromModelRefresh,
     'Is auto generated date table'
   )
+
 ```
 ### Columns in model
 
