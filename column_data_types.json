@@ -1,0 +1,38 @@
+[
+    {
+        "Type": "Automatic",
+        "ID": "1"
+    },
+    {
+        "Type": "String",
+        "ID": "2"
+    },
+    {
+        "Type": "Int64",
+        "ID": "6"
+    },
+    {
+        "Type": "Double",
+        "ID": "8"
+    },
+    {
+        "Type": "DateTime",
+        "ID": "9"
+    },
+    {
+        "Type": "Decimal",
+        "ID": "10"
+    },
+    {
+        "Type": "Boolean",
+        "ID": "11"
+    },
+    {
+        "Type": "Binary",
+        "ID": "17"
+    },
+    {
+        "Type": "Unknown",
+        "ID": "19"
+    }
+]

@@ -1,0 +1,17 @@
+[{
+        "Type": "Data",
+        "ID": "1"
+    },
+    {
+        "Type": "Calculated",
+        "ID": "2"
+    },
+    {
+        "Type": "RowNumber",
+        "ID": "3"
+    },
+    {
+        "Type": "CalculatedTableColumn",
+        "ID": "4"
+    }
+]

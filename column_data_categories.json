@@ -1,0 +1,996 @@
+[{
+  "Type": "Invalid",
+  "ID": "-1"
+},
+{
+  "Type": "All",
+  "ID": "1"
+},
+{
+  "Type": "Regular",
+  "ID": "2"
+},
+{
+  "Type": "Image",
+  "ID": "3"
+},
+{
+  "Type": "ImageBMP",
+  "ID": "4"
+},
+{
+  "Type": "ImageGIF",
+  "ID": "5"
+},
+{
+  "Type": "ImageJPG",
+  "ID": "6"
+},
+{
+  "Type": "ImagePNG",
+  "ID": "7"
+},
+{
+  "Type": "ImageTIFF",
+  "ID": "8"
+},
+{
+  "Type": "ImageURL",
+  "ID": "9"
+},
+{
+  "Type": "Id",
+  "ID": "10"
+},
+{
+  "Type": "RelationToParent",
+  "ID": "11"
+},
+{
+  "Type": "Sequence",
+  "ID": "12"
+},
+{
+  "Type": "OrgTitle",
+  "ID": "13"
+},
+{
+  "Type": "Caption",
+  "ID": "14"
+},
+{
+  "Type": "ShortCaption",
+  "ID": "15"
+},
+{
+  "Type": "CaptionDescription",
+  "ID": "16"
+},
+{
+  "Type": "CaptionAbbreviation",
+  "ID": "17"
+},
+{
+  "Type": "WebURL",
+  "ID": "18"
+},
+{
+  "Type": "WebHTML",
+  "ID": "19"
+},
+{
+  "Type": "WebXMLOrXSL",
+  "ID": "20"
+},
+{
+  "Type": "WebmailAlias",
+  "ID": "21"
+},
+{
+  "Type": "Address",
+  "ID": "22"
+},
+{
+  "Type": "AddressStreet",
+  "ID": "23"
+},
+{
+  "Type": "AddressHouse",
+  "ID": "24"
+},
+{
+  "Type": "AddressCity",
+  "ID": "25"
+},
+{
+  "Type": "AddressStateOrProvince",
+  "ID": "26"
+},
+{
+  "Type": "AddressZIP",
+  "ID": "27"
+},
+{
+  "Type": "AddressQuarter",
+  "ID": "28"
+},
+{
+  "Type": "AddressCountry",
+  "ID": "29"
+},
+{
+  "Type": "AddressBuilding",
+  "ID": "30"
+},
+{
+  "Type": "AddressRoom",
+  "ID": "31"
+},
+{
+  "Type": "AddressFloor",
+  "ID": "32"
+},
+{
+  "Type": "AddressFax",
+  "ID": "33"
+},
+{
+  "Type": "AddressPhone",
+  "ID": "34"
+},
+{
+  "Type": "GeoCentroidX",
+  "ID": "35"
+},
+{
+  "Type": "GeoCentroidY",
+  "ID": "36"
+},
+{
+  "Type": "GeoCentroidZ",
+  "ID": "37"
+},
+{
+  "Type": "GeoBoundaryTop",
+  "ID": "38"
+},
+{
+  "Type": "GeoBoundaryLeft",
+  "ID": "39"
+},
+{
+  "Type": "GeoBoundaryBottom",
+  "ID": "40"
+},
+{
+  "Type": "GeoBoundaryRight",
+  "ID": "41"
+},
+{
+  "Type": "GeoBoundaryFront",
+  "ID": "42"
+},
+{
+  "Type": "GeoBoundaryRear",
+  "ID": "43"
+},
+{
+  "Type": "GeoBoundaryPolygon",
+  "ID": "44"
+},
+{
+  "Type": "PhysicalSize",
+  "ID": "45"
+},
+{
+  "Type": "PhysicalColor",
+  "ID": "46"
+},
+{
+  "Type": "PhysicalWeight",
+  "ID": "47"
+},
+{
+  "Type": "PhysicalHeight",
+  "ID": "48"
+},
+{
+  "Type": "PhysicalWidth",
+  "ID": "49"
+},
+{
+  "Type": "PhysicalDepth",
+  "ID": "50"
+},
+{
+  "Type": "PhysicalVolume",
+  "ID": "51"
+},
+{
+  "Type": "PhysicalDensity",
+  "ID": "52"
+},
+{
+  "Type": "PersonFullName",
+  "ID": "53"
+},
+{
+  "Type": "PersonFirstName",
+  "ID": "54"
+},
+{
+  "Type": "PersonLastName",
+  "ID": "55"
+},
+{
+  "Type": "PersonMiddleName",
+  "ID": "56"
+},
+{
+  "Type": "PersonDemographic",
+  "ID": "57"
+},
+{
+  "Type": "PersonContact",
+  "ID": "58"
+},
+{
+  "Type": "QtyRangeLow",
+  "ID": "59"
+},
+{
+  "Type": "QtyRangeHigh",
+  "ID": "60"
+},
+{
+  "Type": "FormattingColor",
+  "ID": "61"
+},
+{
+  "Type": "FormattingOrder",
+  "ID": "62"
+},
+{
+  "Type": "FormattingFont",
+  "ID": "63"
+},
+{
+  "Type": "FormattingFontEffects",
+  "ID": "64"
+},
+{
+  "Type": "FormattingFontSize",
+  "ID": "65"
+},
+{
+  "Type": "FormattingSubtotal",
+  "ID": "66"
+},
+{
+  "Type": "Date",
+  "ID": "67"
+},
+{
+  "Type": "DateStart",
+  "ID": "68"
+},
+{
+  "Type": "DateEnded",
+  "ID": "69"
+},
+{
+  "Type": "DateCanceled",
+  "ID": "70"
+},
+{
+  "Type": "DateModified",
+  "ID": "71"
+},
+{
+  "Type": "DateDuration",
+  "ID": "72"
+},
+{
+  "Type": "Version",
+  "ID": "73"
+},
+{
+  "Type": "Years",
+  "ID": "74"
+},
+{
+  "Type": "Quarters",
+  "ID": "75"
+},
+{
+  "Type": "Months",
+  "ID": "76"
+},
+{
+  "Type": "Weeks",
+  "ID": "77"
+},
+{
+  "Type": "Days",
+  "ID": "78"
+},
+{
+  "Type": "Hours",
+  "ID": "79"
+},
+{
+  "Type": "Minutes",
+  "ID": "80"
+},
+{
+  "Type": "Seconds",
+  "ID": "81"
+},
+{
+  "Type": "UndefinedTime",
+  "ID": "82"
+},
+{
+  "Type": "OrganizationalUnit",
+  "ID": "83"
+},
+{
+  "Type": "BomResource",
+  "ID": "84"
+},
+{
+  "Type": "Quantitative",
+  "ID": "85"
+},
+{
+  "Type": "Account",
+  "ID": "86"
+},
+{
+  "Type": "Customers",
+  "ID": "87"
+},
+{
+  "Type": "CustomerGroup",
+  "ID": "88"
+},
+{
+  "Type": "CustomerHousehold",
+  "ID": "89"
+},
+{
+  "Type": "Product",
+  "ID": "90"
+},
+{
+  "Type": "ProductGroup",
+  "ID": "91"
+},
+{
+  "Type": "Scenario",
+  "ID": "92"
+},
+{
+  "Type": "Utility",
+  "ID": "93"
+},
+{
+  "Type": "Person",
+  "ID": "94"
+},
+{
+  "Type": "Company",
+  "ID": "95"
+},
+{
+  "Type": "CurrencySource",
+  "ID": "96"
+},
+{
+  "Type": "CurrencyDestination",
+  "ID": "97"
+},
+{
+  "Type": "Channel",
+  "ID": "98"
+},
+{
+  "Type": "Representative",
+  "ID": "99"
+},
+{
+  "Type": "Promotion",
+  "ID": "100"
+},
+{
+  "Type": "Continent",
+  "ID": "101"
+},
+{
+  "Type": "Region",
+  "ID": "102"
+},
+{
+  "Type": "Country",
+  "ID": "103"
+},
+{
+  "Type": "StateOrProvince",
+  "ID": "104"
+},
+{
+  "Type": "County",
+  "ID": "105"
+},
+{
+  "Type": "City",
+  "ID": "106"
+},
+{
+  "Type": "PostalCode",
+  "ID": "107"
+},
+{
+  "Type": "Point",
+  "ID": "108"
+},
+{
+  "Type": "AccountType",
+  "ID": "109"
+},
+{
+  "Type": "AccountName",
+  "ID": "110"
+},
+{
+  "Type": "AccountNumber",
+  "ID": "111"
+},
+{
+  "Type": "ProjectName",
+  "ID": "112"
+},
+{
+  "Type": "ProjectCode",
+  "ID": "113"
+},
+{
+  "Type": "ProjectStartDate",
+  "ID": "114"
+},
+{
+  "Type": "ProjectEndDate",
+  "ID": "115"
+},
+{
+  "Type": "ProjectCompletion",
+  "ID": "116"
+},
+{
+  "Type": "CurrencyName",
+  "ID": "117"
+},
+{
+  "Type": "CurrencyIsOCode",
+  "ID": "118"
+},
+{
+  "Type": "PercentOwnership",
+  "ID": "119"
+},
+{
+  "Type": "PercentVoteright",
+  "ID": "120"
+},
+{
+  "Type": "Project",
+  "ID": "121"
+},
+{
+  "Type": "RateType",
+  "ID": "122"
+},
+{
+  "Type": "Rate",
+  "ID": "123"
+},
+{
+  "Type": "ProductSKU",
+  "ID": "124"
+},
+{
+  "Type": "ProductCategory",
+  "ID": "125"
+},
+{
+  "Type": "ProductBrand",
+  "ID": "126"
+},
+{
+  "Type": "DeletedFlag",
+  "ID": "127"
+},
+{
+  "Type": "ScdStatus",
+  "ID": "128"
+},
+{
+  "Type": "ScdEndDate",
+  "ID": "129"
+},
+{
+  "Type": "ScdOriginalID",
+  "ID": "130"
+},
+{
+  "Type": "ScdStartDate",
+  "ID": "131"
+},
+{
+  "Type": "DayOfMonthOrPeriod",
+  "ID": "132"
+},
+{
+  "Type": "WeekOfQuarter",
+  "ID": "133"
+},
+{
+  "Type": "WeekOfMonthOrPeriod",
+  "ID": "134"
+},
+{
+  "Type": "MonthOrPeriodOfQuarter",
+  "ID": "135"
+},
+{
+  "Type": "MonthOrPeriodOfYear",
+  "ID": "136"
+},
+{
+  "Type": "Trimesters",
+  "ID": "137"
+},
+{
+  "Type": "Halfyears",
+  "ID": "138"
+},
+{
+  "Type": "Tendays",
+  "ID": "139"
+},
+{
+  "Type": "DayOfWeek",
+  "ID": "140"
+},
+{
+  "Type": "DayOfTendays",
+  "ID": "141"
+},
+{
+  "Type": "DayOfMonth",
+  "ID": "142"
+},
+{
+  "Type": "DayOfQuarter",
+  "ID": "143"
+},
+{
+  "Type": "DayOfTrimester",
+  "ID": "144"
+},
+{
+  "Type": "DayOfHalfyear",
+  "ID": "145"
+},
+{
+  "Type": "DayOfYear",
+  "ID": "146"
+},
+{
+  "Type": "WeekOfYear",
+  "ID": "147"
+},
+{
+  "Type": "TendayOfMonth",
+  "ID": "148"
+},
+{
+  "Type": "TendayOfQuarter",
+  "ID": "149"
+},
+{
+  "Type": "TendayOfTrimester",
+  "ID": "150"
+},
+{
+  "Type": "TendayOfHalfyear",
+  "ID": "151"
+},
+{
+  "Type": "TendayOfYear",
+  "ID": "152"
+},
+{
+  "Type": "MonthOfTrimester",
+  "ID": "153"
+},
+{
+  "Type": "MonthOfQuarter",
+  "ID": "154"
+},
+{
+  "Type": "MonthOfHalfyear",
+  "ID": "155"
+},
+{
+  "Type": "MonthOfYear",
+  "ID": "156"
+},
+{
+  "Type": "TrimesterOfYear",
+  "ID": "157"
+},
+{
+  "Type": "QuarterOfHalfyear",
+  "ID": "158"
+},
+{
+  "Type": "QuarterOfYear",
+  "ID": "159"
+},
+{
+  "Type": "HalfyearOfYear",
+  "ID": "160"
+},
+{
+  "Type": "FiscalDate",
+  "ID": "161"
+},
+{
+  "Type": "FiscalDayOfWeek",
+  "ID": "162"
+},
+{
+  "Type": "FiscalDayOfMonth",
+  "ID": "163"
+},
+{
+  "Type": "FiscalDayOfQuarter",
+  "ID": "164"
+},
+{
+  "Type": "FiscalDayOfTrimester",
+  "ID": "165"
+},
+{
+  "Type": "FiscalDayOfHalfyear",
+  "ID": "166"
+},
+{
+  "Type": "FiscalDayOfYear",
+  "ID": "167"
+},
+{
+  "Type": "FiscalWeeks",
+  "ID": "168"
+},
+{
+  "Type": "FiscalWeekOfYear",
+  "ID": "169"
+},
+{
+  "Type": "FiscalWeekOfHalfyear",
+  "ID": "170"
+},
+{
+  "Type": "FiscalWeekOfQuarter",
+  "ID": "171"
+},
+{
+  "Type": "FiscalWeekOfTrimester",
+  "ID": "172"
+},
+{
+  "Type": "FiscalWeekOfMonth",
+  "ID": "173"
+},
+{
+  "Type": "FiscalMonths",
+  "ID": "174"
+},
+{
+  "Type": "FiscalMonthOfTrimester",
+  "ID": "175"
+},
+{
+  "Type": "FiscalMonthOfQuarter",
+  "ID": "176"
+},
+{
+  "Type": "FiscalMonthOfHalfyear",
+  "ID": "177"
+},
+{
+  "Type": "FiscalMonthOfYear",
+  "ID": "178"
+},
+{
+  "Type": "FiscalTrimesters",
+  "ID": "179"
+},
+{
+  "Type": "FiscalTrimesterOfYear",
+  "ID": "180"
+},
+{
+  "Type": "FiscalQuarters",
+  "ID": "181"
+},
+{
+  "Type": "FiscalQuarterOfYear",
+  "ID": "182"
+},
+{
+  "Type": "FiscalQuarterOfHalfyear",
+  "ID": "183"
+},
+{
+  "Type": "FiscalHalfyears",
+  "ID": "184"
+},
+{
+  "Type": "FiscalHalfyearOfYear",
+  "ID": "185"
+},
+{
+  "Type": "FiscalYears",
+  "ID": "186"
+},
+{
+  "Type": "ReportingDate",
+  "ID": "187"
+},
+{
+  "Type": "ReportingDayOfWeek",
+  "ID": "188"
+},
+{
+  "Type": "ReportingDayOfMonth",
+  "ID": "189"
+},
+{
+  "Type": "ReportingDayOfQuarter",
+  "ID": "190"
+},
+{
+  "Type": "ReportingDayOfTrimester",
+  "ID": "191"
+},
+{
+  "Type": "ReportingDayOfHalfyear",
+  "ID": "192"
+},
+{
+  "Type": "ReportingDayOfYear",
+  "ID": "193"
+},
+{
+  "Type": "ReportingWeeks",
+  "ID": "194"
+},
+{
+  "Type": "ReportingWeekOfYear",
+  "ID": "195"
+},
+{
+  "Type": "ReportingWeekOfHalfyear",
+  "ID": "196"
+},
+{
+  "Type": "ReportingWeekOfQuarter",
+  "ID": "197"
+},
+{
+  "Type": "ReportingWeekOfTrimester",
+  "ID": "198"
+},
+{
+  "Type": "ReportingWeekOfMonth",
+  "ID": "199"
+},
+{
+  "Type": "ReportingMonths",
+  "ID": "200"
+},
+{
+  "Type": "ReportingMonthOfTrimester",
+  "ID": "201"
+},
+{
+  "Type": "ReportingMonthOfQuarter",
+  "ID": "202"
+},
+{
+  "Type": "ReportingMonthOfHalfyear",
+  "ID": "203"
+},
+{
+  "Type": "ReportingMonthOfYear",
+  "ID": "204"
+},
+{
+  "Type": "ReportingTrimesters",
+  "ID": "205"
+},
+{
+  "Type": "ReportingTrimesterOfYear",
+  "ID": "206"
+},
+{
+  "Type": "ReportingQuarters",
+  "ID": "207"
+},
+{
+  "Type": "ReportingQuarterOfYear",
+  "ID": "208"
+},
+{
+  "Type": "ReportingQuarterOfHalfyear",
+  "ID": "209"
+},
+{
+  "Type": "ReportingHalfyears",
+  "ID": "210"
+},
+{
+  "Type": "ReportingHalfyearOfYear",
+  "ID": "211"
+},
+{
+  "Type": "ReportingYears",
+  "ID": "212"
+},
+{
+  "Type": "ManufacturingDate",
+  "ID": "213"
+},
+{
+  "Type": "ManufacturingDayOfWeek",
+  "ID": "214"
+},
+{
+  "Type": "ManufacturingDayOfMonth",
+  "ID": "215"
+},
+{
+  "Type": "ManufacturingDayOfQuarter",
+  "ID": "216"
+},
+{
+  "Type": "ManufacturingDayOfHalfyear",
+  "ID": "217"
+},
+{
+  "Type": "ManufacturingDayOfYear",
+  "ID": "218"
+},
+{
+  "Type": "ManufacturingWeeks",
+  "ID": "219"
+},
+{
+  "Type": "ManufacturingWeekOfYear",
+  "ID": "220"
+},
+{
+  "Type": "ManufacturingWeekOfHalfyear",
+  "ID": "221"
+},
+{
+  "Type": "ManufacturingWeekOfQuarter",
+  "ID": "222"
+},
+{
+  "Type": "ManufacturingWeekOfMonth",
+  "ID": "223"
+},
+{
+  "Type": "ManufacturingMonths",
+  "ID": "224"
+},
+{
+  "Type": "ManufacturingMonthOfQuarter",
+  "ID": "225"
+},
+{
+  "Type": "ManufacturingMonthOfHalfyear",
+  "ID": "226"
+},
+{
+  "Type": "ManufacturingMonthOfYear",
+  "ID": "227"
+},
+{
+  "Type": "ManufacturingTrimesters",
+  "ID": "228"
+},
+{
+  "Type": "ManufacturingTrimesterOfYear",
+  "ID": "229"
+},
+{
+  "Type": "ManufacturingQuarters",
+  "ID": "230"
+},
+{
+  "Type": "ManufacturingQuarterOfYear",
+  "ID": "231"
+},
+{
+  "Type": "ManufacturingQuarterOfHalfyear",
+  "ID": "232"
+},
+{
+  "Type": "ManufacturingHalfyears",
+  "ID": "233"
+},
+{
+  "Type": "ManufacturingHalfyearOfYear",
+  "ID": "234"
+},
+{
+  "Type": "ManufacturingYears",
+  "ID": "235"
+},
+{
+  "Type": "WinterSummerSeason",
+  "ID": "236"
+},
+{
+  "Type": "IsHoliday",
+  "ID": "237"
+},
+{
+  "Type": "IsWeekday",
+  "ID": "238"
+},
+{
+  "Type": "IsWorkingDay",
+  "ID": "239"
+},
+{
+  "Type": "IsPeakDay",
+  "ID": "240"
+},
+{
+  "Type": "ISO8601Date",
+  "ID": "241"
+},
+{
+  "Type": "ISO8601DayOfWeek",
+  "ID": "242"
+},
+{
+  "Type": "ISO8601DayOfYear",
+  "ID": "243"
+},
+{
+  "Type": "ISO8601Weeks",
+  "ID": "244"
+},
+{
+  "Type": "ISO8601WeekOfYear",
+  "ID": "245"
+},
+{
+  "Type": "ISO8601Years",
+  "ID": "246"
+},
+{
+  "Type": "RowNumber",
+  "ID": "247"
+},
+{
+  "Type": "ExtendedType",
+  "ID": "248"
+}]
