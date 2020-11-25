@@ -1,8 +1,8 @@
-require(RDCOMClient)
-require(dplyr)
-require(magrittr)
-require(data.table)
-require(jsonlite)
+library(RDCOMClient)
+library(dplyr)
+library(magrittr)
+library(data.table)
+library(jsonlite)
 
 get_value <- function(x) {
   get_v1 <- function (x) {
@@ -36,11 +36,13 @@ build_query <- function(view, headers) {
 }
 
 get_dmv <- function(dmv) {
-  headers <- dmv_queries[dmv_queries$view == dmv,]$headers[[1]]
+  
+  expected_headers <- dmv_queries[dmv_queries$view == dmv,]$headers[[1]]
   
   result <- con$Execute(
-    build_query(dmv, headers)
+    build_query(dmv, expected_headers)
   )$GetRows() %>%
-    rowset_to_DT(headers = headers)
+    rowset_to_DT(headers = expected_headers)
   return(result)
+  
 }
