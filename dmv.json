@@ -35,6 +35,7 @@
       "IsHidden",
       "State",
       "IsUnique",
+      "Type",
       "SortByColumnID",
       "KeepUniqueRows"
   	]
@@ -48,6 +49,20 @@
       "DataType",
       "Expression",
       "IsHidden"
+  	]
+  },
+  {
+    "view": "TMSCHEMA_PARTITIONS",
+    "headers": [
+      "ID",
+      "TableID",
+      "DataSourceID",
+      "QueryDefinition",
+      "State",
+      "Type",
+      "DataView",
+      "RangeStart",
+      "RangeEnd"
   	]
   }
 ]
