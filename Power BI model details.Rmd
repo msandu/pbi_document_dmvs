@@ -15,9 +15,6 @@ library(jsonlite)
 
 dmv_queries <- fromJSON("dmv.json")
 
-# unlist bad, NULLs can't be inside R vectors
-# so it breaks the structure, when using unlist.
-
 get_value <- function(x) {
   get_v1 <- function (x) {
     result <- x[[1]] # kinda retarded, but works
@@ -99,6 +96,14 @@ measures <- con$Execute(
   )$GetRows() %>%
     rowset_to_DT(headers = measures_headers)
 
+
+partitions_headers <- dmv_queries[dmv_queries$view == 'TMSCHEMA_PARTITIONS',]$headers[[1]]
+
+partitions <- con$Execute(
+    build_query('TMSCHEMA_PARTITIONS', partitions_headers)
+  )$GetRows() %>%
+    rowset_to_DT(headers = partitions_headers)
+
 ```
 
 ### Tables
@@ -130,5 +135,6 @@ columns %>%
     'Is unique' = 'IsUnique.x',
     'Sorted by' = 'ExplicitName.y'
   )
+
 ```
 
