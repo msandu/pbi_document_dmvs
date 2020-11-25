@@ -1,0 +1,13 @@
+[{
+        "Type": "Ready",
+        "ID": "1"
+    },
+    {
+        "Type": "CalculationNeeded",
+        "ID": "4"
+    },
+    {
+        "Type": "DependencyError",
+        "ID": "7"
+    }
+]
