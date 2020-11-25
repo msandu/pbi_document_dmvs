@@ -1,0 +1,51 @@
+[
+  {
+    "view": "TMSCHEMA_RELATIONSHIPS",
+    "headers": [
+      "ID",
+      "CrossFilteringBehavior",
+    	"FromTableID",
+    	"FromColumnID",
+    	"FromCardinality",
+    	"ToTableID",
+    	"ToColumnID",
+    	"ToCardinality",
+    	"State",
+    	"SecurityFilteringBehavior"
+  	]
+  },
+  {
+    "view": "TMSCHEMA_TABLES",
+    "headers": [
+      "ID",
+      "Name",
+      "DataCategory",
+      "RefreshPolicyID",
+      "ExcludeFromModelRefresh"
+  	]
+  },
+  {
+    "view": "TMSCHEMA_COLUMNS",
+    "headers": [
+      "ID",
+      "TableID",
+      "ExplicitName",
+      "DataCategory",
+      "IsHidden",
+      "State",
+      "IsUnique",
+      "SortByColumnID",
+      "KeepUniqueRows"
+  	]
+  },{
+    "view": "TMSCHEMA_MEASURES",
+    "headers": [
+      "ID",
+      "TableID",
+      "Name",
+      "DataType",
+      "Expression",
+      "IsHidden"
+  	]
+  }
+]
