@@ -19,7 +19,6 @@
     "headers": [
       "ID",
       "Name",
-      "DataCategory",
       "IsHidden",
       "RefreshPolicyID",
       "ExcludeFromModelRefresh"
