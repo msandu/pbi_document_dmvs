@@ -2,11 +2,20 @@
 title: "Power BI model details"
 author: "Marius Sandu"
 date: "11/23/2020"
-output: html_document
+output: 
+  html_document:
+    toc: TRUE
+    code_folding: hide
+    toc_float:
+      collapsed: FALSE
+      smooth_scroll: TRUE
 ---
 
 ```{r setup, include=FALSE}
+
 knitr::opts_chunk$set(echo = TRUE)
+
+library(htmltools)
 library(RDCOMClient)
 library(dplyr)
 library(magrittr)
@@ -20,28 +29,81 @@ dmv_queries <- fromJSON("queries/dmv.json")
 # TODO: the port can be scanned from the localappdata folder, and the initial catalogue retrieved via a DMV query
 
 con <- COMCreate("ADODB.Connection")
+
 con[["ConnectionString"]] <- paste(
   "Provider=MSOLAP.8",
   "Integrated Security=SSPI",
   "Persist Security Info=True",
-  "Data Source=localhost:63231",
-  "Initial Catalog=314f0f2c-814f-43c8-bc7b-7c867e7ca52c",
+  "Data Source=localhost:64501",
+  "Initial Catalog=c2552ddc-4390-4c38-be5e-34d181ac9caa",
   sep = ";")
 
 con$Open()
 
 ```
 
-### Data sources used
+## Initial bit
 
-The Partition object represents a partition in a table. It is a child of a Table object. The partitions in a table define the data from external data sources that become available when the table is queried.
+Similar to a data [dictionary structure](https://www.sciencedirect.com/topics/computer-science/data-dictionary).
+
+### Tables
+
+Starting with tables as they are the first thing that one sees when loading a PBIX file inside Power BI Desktop.
 
 ```{r}
 
-partitions <- get_dmv('TMSCHEMA_PARTITIONS')
-partitions %>%
+tables <- get_dmv('TMSCHEMA_TABLES')
+
+tables %>%
+  mutate(
+    'Local date table' = grepl('LocalDateTable[a-z0-9\\-\\_]+', Name)
+  ) %>%
+  select(
+    Name,
+    'Hidden' = IsHidden,
+    'Refresh policy ID' = RefreshPolicyID,
+    'Excluded from refresh' = ExcludeFromModelRefresh,
+    `Local date table`
+  ) %>%
   datatable(
     style = 'bootstrap',
     filter = 'top')
 
 ```
+
+### Partitions
+```{r}
+
+partitions <- get_dmv('TMSCHEMA_PARTITIONS')
+partition_types <- fromJSON('labels/partition_types.json')
+partition_modes <- fromJSON('labels/partition_modes.json')
+
+partitions %>%
+  left_join(
+    tables,
+    by = c('TableID' = 'ID')
+  ) %>%
+  left_join(
+    partition_types,
+    by = c('Type' = 'ID')
+  ) %>%
+  left_join(
+    partition_modes,
+    by = c('Mode' = 'ID')
+  ) %>%
+  select(
+    Name,
+    Description,
+    'Type' = 'Type.y',
+    'Mode' = 'Type.y.y',
+    'Range start' = RangeStart,
+    'Range end' = RangeEnd,
+    'Query' = QueryDefinition
+  ) %>%
+  datatable(
+    style = 'bootstrap',
+    filter = 'top')
+  
+
+```
+
