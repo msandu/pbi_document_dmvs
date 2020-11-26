@@ -1,7 +1,5 @@
 ---
 title: "Power BI model details"
-author: "Marius Sandu"
-date: "11/23/2020"
 output: 
   html_document:
     toc: TRUE
@@ -22,11 +20,13 @@ library(magrittr)
 library(data.table)
 library(jsonlite)
 library(DT)
+library(shiny)
 source('helpers.R')
 
 dmv_queries <- fromJSON("queries/dmv.json")
 
-# TODO: the port can be scanned from the localappdata folder, and the initial catalogue retrieved via a DMV query
+# TODO: the port can be scanned from the localappdata folder
+# and the initial catalog retrieved via a DMV query
 
 con <- COMCreate("ADODB.Connection")
 
@@ -34,8 +34,8 @@ con[["ConnectionString"]] <- paste(
   "Provider=MSOLAP.8",
   "Integrated Security=SSPI",
   "Persist Security Info=True",
-  "Data Source=localhost:64501",
-  "Initial Catalog=c2552ddc-4390-4c38-be5e-34d181ac9caa",
+  "Data Source=localhost:59788",
+  "Initial Catalog=6138de76-abee-480a-b0ed-4850117d5090",
   sep = ";")
 
 con$Open()
@@ -58,9 +58,11 @@ tables %>%
   mutate(
     'Local date table' = grepl('LocalDateTable[a-z0-9\\-\\_]+', Name)
   ) %>%
+  filter(
+    IsHidden == 'FALSE'
+  ) %>%
   select(
     Name,
-    'Hidden' = IsHidden,
     'Refresh policy ID' = RefreshPolicyID,
     'Excluded from refresh' = ExcludeFromModelRefresh,
     `Local date table`
@@ -71,14 +73,18 @@ tables %>%
 
 ```
 
-### Partitions
-```{r}
+### Partitions {.tabset .tabset-fade}
 
+The Partition object represents a partition in a table. It is a child of a Table object and multiple partitions may be combined to form a single table. The partitions in
+a table define the data from external data sources that become available when the table is 
+queried.
+
+```{r}
 partitions <- get_dmv('TMSCHEMA_PARTITIONS')
 partition_types <- fromJSON('labels/partition_types.json')
 partition_modes <- fromJSON('labels/partition_modes.json')
 
-partitions %>%
+partitions %<>%
   left_join(
     tables,
     by = c('TableID' = 'ID')
@@ -91,8 +97,40 @@ partitions %>%
     partition_modes,
     by = c('Mode' = 'ID')
   ) %>%
+  filter(
+    IsHidden == 'FALSE'
+  )
+
+```
+
+#### Without queries
+
+```{r}
+
+partitions  %>%
   select(
-    Name,
+    'Partition name' = Name.x,
+    'Table name' = Name.y,
+    Description,
+    'Type' = 'Type.y',
+    'Mode' = 'Type.y.y',
+    'Range start' = RangeStart,
+    'Range end' = RangeEnd
+  ) %>%
+  datatable(
+    style = 'bootstrap',
+    filter = 'top')
+
+```
+
+#### With queries
+
+```{r}
+
+partitions %>%
+  select(
+    'Partition name' = Name.x,
+    'Table name' = Name.y,
     Description,
     'Type' = 'Type.y',
     'Mode' = 'Type.y.y',
@@ -103,7 +141,6 @@ partitions %>%
   datatable(
     style = 'bootstrap',
     filter = 'top')
-  
 
 ```
 
