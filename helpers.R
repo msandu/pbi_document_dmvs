@@ -46,12 +46,19 @@ get_dmv <- function(dmv) {
   
 }
 
-get_sample <- function(table_name, table_id, columns) {
-  expected_headers <- columns[columns$TableID == table_id & columns$IsHidden == 'FALSE', ExplicitName]
+get_sample <- function(table_name) {
+  
+  table_id <- tables[tables$Name == table_name, ID]
+  
+  expected_headers <- columns[
+    columns$TableID == table_id 
+    & columns$IsHidden == 'FALSE', ExplicitName]
+  
   dax_query <- paste0("EVALUATE SAMPLE (5, '",table_name,"', 1)")
   result <- con$Execute(
     dax_query
   )$GetRows() %>%
     rowset_to_DT(headers = expected_headers)
+
   return(result)
 }
