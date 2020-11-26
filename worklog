@@ -11,7 +11,5 @@ Would do structure per table:
         Should be a DMV storing this
 
 
-Next steps:
-    
-    Create an interactive type of page, that autofilters based on tables used.
+partitions > Table [ Columns, Measures ] Relationships
     
