@@ -2,14 +2,18 @@ Would do structure per table:
 
     Table:
         Parent table
-        Partitions used
+        Partitions used:
+            Security details
         Columns
         Relationships
+        Data samples
 
     Object sizing:
         Dimensions in bytes for each table
         Should be a DMV storing this
 
 
+
+
 partitions > Table [ Columns, Measures ] Relationships
-    
+
