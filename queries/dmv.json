@@ -54,6 +54,7 @@
     "view": "TMSCHEMA_PARTITIONS",
     "headers": [
       "ID",
+      "Name",
       "TableID",
       "Description",
       "QueryDefinition",
