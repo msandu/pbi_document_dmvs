@@ -7,6 +7,7 @@ output:
     toc_float:
       collapsed: FALSE
       smooth_scroll: TRUE
+
 ---
 
 ```{r setup, include=FALSE}
@@ -14,13 +15,15 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 
 library(htmltools)
+library(htmlwidgets)
 library(RDCOMClient)
 library(dplyr)
 library(magrittr)
 library(data.table)
 library(jsonlite)
 library(DT)
-library(shiny)
+library(bsselectR)
+library(plotly)
 source('helpers.R')
 
 dmv_queries <- fromJSON("queries/dmv.json")
@@ -46,40 +49,68 @@ con$Open()
 
 Similar to a data [dictionary structure](https://www.sciencedirect.com/topics/computer-science/data-dictionary).
 
-### Tables
+### Tables {.tabset .tabset-fade}
 
+#### List of tables
 Starting with tables as they are the first thing that one sees when loading a PBIX file inside Power BI Desktop.
 
 ```{r}
-
-tables <- get_dmv('TMSCHEMA_TABLES')
-
-tables %>%
-  mutate(
-    'Local date table' = grepl('LocalDateTable[a-z0-9\\-\\_]+', Name)
-  ) %>%
+tables <- get_dmv('TMSCHEMA_TABLES') %>%
+  # mutate(
+  #   'Local date table' = grepl('LocalDateTable[a-z0-9\\-\\_]+', Name)
+  # ) %>%
   filter(
     IsHidden == 'FALSE'
-  ) %>%
+  )
+
+tables %>%
   select(
     Name,
     'Refresh policy ID' = RefreshPolicyID,
     'Excluded from refresh' = ExcludeFromModelRefresh,
-    `Local date table`
+    # `Local date table`
   ) %>%
   datatable(
-    style = 'bootstrap',
-    filter = 'top')
+    style = 'bootstrap4',
+    filter = 'top',
+    width = '775.25px')
 
 ```
 
-### Partitions {.tabset .tabset-fade}
-
-The Partition object represents a partition in a table. It is a child of a Table object and multiple partitions may be combined to form a single table. The partitions in
-a table define the data from external data sources that become available when the table is 
-queried.
+#### Samples
 
 ```{r}
+# Need columns in this step to add them to samples
+columns <- get_dmv('TMSCHEMA_COLUMNS')
+columns$ID <- as.integer(columns$ID)
+columns %<>%
+  arrange(ID)
+
+samples <- tables %>% select(Name)
+samples$Content <- lapply(samples$Name, get_sample)
+
+
+bsselectR(samples$Name)
+
+
+
+datatable(
+  filtered_data[, "Content"],
+  style = 'bootstrap4',
+  filter = 'top',
+  width = '775.25px'
+)
+
+```
+
+
+
+### Partitions 
+
+The Partition object represents a partition in a table. It is a child of a Table object and multiple partitions may be combined to form a single table. The partitions in a table define the data from external data sources that become available when the table isqueried.
+
+```{r}
+
 partitions <- get_dmv('TMSCHEMA_PARTITIONS')
 partition_types <- fromJSON('labels/partition_types.json')
 partition_modes <- fromJSON('labels/partition_modes.json')
@@ -101,12 +132,6 @@ partitions %<>%
     IsHidden == 'FALSE'
   )
 
-```
-
-#### Without queries
-
-```{r}
-
 partitions  %>%
   select(
     'Partition name' = Name.x,
@@ -118,29 +143,9 @@ partitions  %>%
     'Range end' = RangeEnd
   ) %>%
   datatable(
-    style = 'bootstrap',
-    filter = 'top')
-
-```
-
-#### With queries
-
-```{r}
-
-partitions %>%
-  select(
-    'Partition name' = Name.x,
-    'Table name' = Name.y,
-    Description,
-    'Type' = 'Type.y',
-    'Mode' = 'Type.y.y',
-    'Range start' = RangeStart,
-    'Range end' = RangeEnd,
-    'Query' = QueryDefinition
-  ) %>%
-  datatable(
-    style = 'bootstrap',
-    filter = 'top')
+    style = 'bootstrap4',
+    filter = 'top',
+    width = '775.25px')
 
 ```
 
