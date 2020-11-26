@@ -22,7 +22,6 @@ rowset_to_DT <- function(x, headers) {
     mutate(across(where(is.list), as.character))
   
   colnames(result) <- headers
-  setkey(result, 'ID')
   return(result)
 }
 
@@ -45,4 +44,14 @@ get_dmv <- function(dmv) {
     rowset_to_DT(headers = expected_headers)
   return(result)
   
+}
+
+get_sample <- function(table_name, table_id, columns) {
+  expected_headers <- columns[columns$TableID == table_id & columns$IsHidden == 'FALSE', ExplicitName]
+  dax_query <- paste0("EVALUATE SAMPLE (5, '",table_name,"', 1)")
+  result <- con$Execute(
+    dax_query
+  )$GetRows() %>%
+    rowset_to_DT(headers = expected_headers)
+  return(result)
 }
