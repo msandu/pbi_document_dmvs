@@ -24,6 +24,7 @@ library(jsonlite)
 library(DT)
 library(bsselectR)
 library(plotly)
+library(visNetwork)
 source('helpers.R')
 
 dmv_queries <- fromJSON("queries/dmv.json")
@@ -37,8 +38,8 @@ con[["ConnectionString"]] <- paste(
   "Provider=MSOLAP.8",
   "Integrated Security=SSPI",
   "Persist Security Info=True",
-  "Data Source=localhost:59788",
-  "Initial Catalog=6138de76-abee-480a-b0ed-4850117d5090",
+  "Data Source=localhost:65246",
+  "Initial Catalog=5a55d141-6ebe-4577-80f0-e10a8a4b53cf",
   sep = ";")
 
 con$Open()
@@ -55,6 +56,7 @@ Similar to a data [dictionary structure](https://www.sciencedirect.com/topics/co
 Starting with tables as they are the first thing that one sees when loading a PBIX file inside Power BI Desktop.
 
 ```{r}
+
 tables <- get_dmv('TMSCHEMA_TABLES') %>%
   # mutate(
   #   'Local date table' = grepl('LocalDateTable[a-z0-9\\-\\_]+', Name)
@@ -73,11 +75,46 @@ tables %>%
   datatable(
     style = 'bootstrap4',
     filter = 'top',
-    width = '775.25px')
+    width = '775.25px'
+  )
 
 ```
 
 #### Samples
+
+```{js}
+
+function sampleSelectionUpdate(){
+
+  var dropdown = document.getElementById('sample_dropdown');
+  var pickedTable = dropdown.options[dropdown.selectedIndex].outerText;
+  
+  for (var i = 0; i<data.length; i++) {
+    if (data[i].Name == pickedTable) {
+        var dataSet = data[i].Content;
+        var columns = data[i].columns;
+    }
+  }
+  
+  // Absolute cancer - can't figure a better way to target the created table tag inside the datatable node
+  // as the elementId argument inside DT::datatable, sets the ID of the node, which is a div tag.
+  if (document.getElementById('data_table_id') == null) {
+    var table_element = $('#target_table')[0].childNodes[0].childNodes[1].childNodes[0].childNodes[0].childNodes[1].childNodes[0];
+    table_element.setAttribute('id', 'data_table_id');
+  }
+
+  $('#data_table_id').DataTable().destroy();
+
+  $('#data_table_id').DataTable( {
+      data: dataSet,
+      columns: columns,
+      destroy: true
+  } );
+
+}
+
+
+```
 
 ```{r}
 # Need columns in this step to add them to samples
@@ -86,28 +123,47 @@ columns$ID <- as.integer(columns$ID)
 columns %<>%
   arrange(ID)
 
-samples <- tables %>% select(Name)
+samples <- tables %>% 
+  filter(Name != 'Measures table') %>%
+  select(Name)
+
 samples$Content <- lapply(samples$Name, get_sample)
+samples$columns <- lapply(samples$Content, get_headers)
 
+# load these in browser as json
+df_to_js(samples)
 
-bsselectR(samples$Name)
+dropdown_options <- sort(samples$Name)
 
-
-
-datatable(
-  filtered_data[, "Content"],
-  style = 'bootstrap4',
-  filter = 'top',
-  width = '775.25px'
+htmltools::HTML(
+  paste0(
+  '<select id="sample_dropdown" onchange="sampleSelectionUpdate();">
+    <option>'
+    ,paste(dropdown_options, collapse = '</option>
+    <option>'),
+    '</option>
+  </select>
+  <br>
+  <br>'
+  )
 )
+
+DT::datatable(data = NULL, elementId  = 'target_table')
+
+# DT::datatable(
+#   data = samples[[2]][[match((samples$Name %>% sort())[1], samples[[1]])]],
+#   style = 'bootstrap4',
+#   filter = 'top',
+#   width = '775.25px',
+#   fillContainer = TRUE,
+#   elementId  = 'target_table'
+# )
 
 ```
 
+### Partitions
 
-
-### Partitions 
-
-The Partition object represents a partition in a table. It is a child of a Table object and multiple partitions may be combined to form a single table. The partitions in a table define the data from external data sources that become available when the table isqueried.
+The Partition object represents a partition in a table. It is a child of a Table object and multiple partitions may be combined to form a single table. The partitions in a table define the data from external data sources that become available when the table is queried.
 
 ```{r}
 
@@ -145,7 +201,48 @@ partitions  %>%
   datatable(
     style = 'bootstrap4',
     filter = 'top',
-    width = '775.25px')
+    width = '775.25px'
+  )
+
+```
+
+```{r}
+
+table_nodes <- tables[,c("Name", "ID")] %>%
+  select(
+    'title' = Name,
+    'id' = ID) %>%
+  mutate(
+    'group' = 'Table',
+    'shape' = 'box'
+  )
+
+partition_nodes <- partitions[,c("Name.x", "ID")] %>%
+  select(
+    'title' = Name.x,
+    'id' = ID) %>%
+  mutate(
+    'group' = 'Partition',
+    'shape' = 'database'
+  )
+
+nodes <- rbind(
+  partition_nodes,
+  table_nodes
+)
+
+edges <- data.frame(
+  from = partitions$ID,
+  to = partitions$TableID,
+  length = 500)
+
+visNetwork(nodes = nodes, edges = edges, width = "100%") %>% 
+  visOptions(
+    highlightNearest = T, 
+    nodesIdSelection = T,
+    manipulation = F) %>%
+  visEdges(arrows = 'to') %>%
+  visHierarchicalLayout(direction = "LR")
 
 ```
 

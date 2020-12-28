@@ -4,12 +4,13 @@ library(magrittr)
 library(data.table)
 library(jsonlite)
 
-get_value <- function(x) {
+get_value <- function (x) {
   get_v1 <- function (x) {
     result <- x[[1]] # kinda retarded, but works
     return(result) 
   }
   result <- sapply(x, get_v1)
+  
   return(result)
 }
 
@@ -59,6 +60,24 @@ get_sample <- function(table_name) {
     dax_query
   )$GetRows() %>%
     rowset_to_DT(headers = expected_headers)
+      
+  return(result)
+  
+}
 
+get_headers <- function(content) {
+  result <- data.frame(
+    'data' = colnames(content),
+    'title' = colnames(content)
+  )
   return(result)
 }
+
+df_to_js <- function(x, var_name = "data", ...){
+  
+  json_data <- jsonlite::toJSON(x, dataframe = 'rows')
+  
+  htmltools::tags$script(paste0("var ",var_name," = ", json_data, ";"))
+  
+}
+
