@@ -30,7 +30,7 @@
       "ID",
       "TableID",
       "ExplicitName",
-      "DataCategory",
+      "FormatString",
       "IsHidden",
       "State",
       "IsUnique",
