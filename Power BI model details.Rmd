@@ -38,8 +38,8 @@ con[["ConnectionString"]] <- paste(
   "Provider=MSOLAP.8",
   "Integrated Security=SSPI",
   "Persist Security Info=True",
-  "Data Source=localhost:59862",
-  "Initial Catalog=5567aabc-f054-4758-b85f-8ca52cdd4886",
+  "Data Source=localhost:60581",
+  "Initial Catalog=2b1c0a4f-9075-48cb-b26d-689a0b710755",
   sep = ";")
 
 con$Open()
@@ -52,8 +52,6 @@ function sampleSelectionUpdate(){
   var dropdown = document.getElementById('sample_dropdown');
   var pickedTable = dropdown.options[dropdown.selectedIndex].outerText;
   var sampleTables = document.getElementsByClassName('sample_tables');
-  
-  
   
   for (var i = 0; i < sampleTables.length; i++) {
     if (sampleTables[i].id == pickedTable) {
