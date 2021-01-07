@@ -118,7 +118,7 @@ dropdown_options <- sort(samples$table_name)
 
 htmltools::HTML(
   paste0(
-  '<select id="sample_dropdown" onchange="sampleSelectionUpdate();">
+  '<select id="sample_dropdown" onchange="sampleSelectionUpdate();" class="custom-select">
     <option>'
     ,paste(dropdown_options, collapse = '</option>
     <option>'),
@@ -193,6 +193,9 @@ partitions  %>%
 ```
 
 ```{r echo=F}
+
+diagram_layout <- fromJSON('pbit_generated/DiagramLayout.json')
+relationship_diagram <- as.data.frame(diagram_layout$diagrams$layout$nodes)
 
 table_nodes <- tables[,c("Name", "ID")] %>%
   select(
